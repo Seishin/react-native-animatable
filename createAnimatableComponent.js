@@ -108,15 +108,15 @@ function transitionToValue(
   const animation =
     duration || easing || delay
       ? Animated.timing(transitionValue, {
-          toValue,
-          delay,
-          duration: duration || 1000,
-          easing:
-            typeof easing === 'function'
-              ? easing
-              : EASING_FUNCTIONS[easing || 'ease'],
-          useNativeDriver,
-        })
+        toValue,
+        delay,
+        duration: duration || 1000,
+        easing:
+          typeof easing === 'function'
+            ? easing
+            : EASING_FUNCTIONS[easing || 'ease'],
+        useNativeDriver,
+      })
       : Animated.spring(transitionValue, { toValue, useNativeDriver });
   setTimeout(() => onTransitionBegin(property), delay);
   animation.start(() => onTransitionEnd(property));
@@ -180,10 +180,10 @@ export default function createAnimatableComponent(WrappedComponent) {
       easing: undefined,
       iterationCount: 1,
       iterationDelay: 0,
-      onAnimationBegin() {},
-      onAnimationEnd() {},
-      onTransitionBegin() {},
-      onTransitionEnd() {},
+      onAnimationBegin() { },
+      onAnimationEnd() { },
+      onTransitionBegin() { },
+      onTransitionEnd() { },
       style: undefined,
       transition: undefined,
       useNativeDriver: false,
@@ -239,7 +239,7 @@ export default function createAnimatableComponent(WrappedComponent) {
       );
       Object.keys(currentTransitionValues).forEach(key => {
         const value = currentTransitionValues[key];
-        if (INTERPOLATION_STYLE_PROPERTIES.indexOf(key) !== -1 || typeof(value) !== 'number') {
+        if (INTERPOLATION_STYLE_PROPERTIES.indexOf(key) !== -1 || typeof (value) !== 'number') {
           transitionValues[key] = new Animated.Value(0);
           styleValues[key] = value;
         } else {
@@ -319,7 +319,8 @@ export default function createAnimatableComponent(WrappedComponent) {
       }
     }
 
-    componentWillReceiveProps(props) {
+    // TODO: Temp Solution. Refactor.
+    UNSAFE_componentWillReceiveProps(props) {
       const {
         animation,
         delay,
@@ -450,7 +451,7 @@ export default function createAnimatableComponent(WrappedComponent) {
           transitionValue = new Animated.Value(0);
         }
         const needsInterpolation =
-          INTERPOLATION_STYLE_PROPERTIES.indexOf(property) !== -1 || typeof(value) !== 'number';
+          INTERPOLATION_STYLE_PROPERTIES.indexOf(property) !== -1 || typeof (value) !== 'number';
         const needsZeroClamping =
           ZERO_CLAMPED_STYLE_PROPERTIES.indexOf(property) !== -1;
         if (needsInterpolation) {
@@ -499,7 +500,7 @@ export default function createAnimatableComponent(WrappedComponent) {
       Object.keys(toValuesFlat).forEach(property => {
         const toValue = toValuesFlat[property];
         const needsInterpolation =
-          INTERPOLATION_STYLE_PROPERTIES.indexOf(property) !== -1 || typeof(value) !== 'number';
+          INTERPOLATION_STYLE_PROPERTIES.indexOf(property) !== -1 || typeof (value) !== 'number';
         const needsZeroClamping =
           ZERO_CLAMPED_STYLE_PROPERTIES.indexOf(property) !== -1;
         const transitionStyle = this.state.transitionStyle[property];
